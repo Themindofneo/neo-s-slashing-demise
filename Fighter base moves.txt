@@ -1,0 +1,813 @@
+
+--⫷𓆩[ Walking Forward Animation Trigger ]𓆪⫸--
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+
+-- Fade settings
+local fadeTime = 0.3 -- Time to smoothly adjust animation speed
+
+-- Walk Animation setup
+local walkAnimation = Instance.new("Animation")
+walkAnimation.AnimationId = "rbxassetid://182491037"  -- Replace with your walk animation ID
+local walkAnimationTrack = animator:LoadAnimation(walkAnimation)
+
+-- State to track movement
+local isMoving = false
+
+-- Function to play walk animation
+local function playWalkAnimation()
+    if not walkAnimationTrack.IsPlaying then
+        walkAnimationTrack:Play(fadeTime)
+        walkAnimationTrack.TimePosition = 0 -- Start at the beginning
+        walkAnimationTrack:AdjustSpeed(0.4)  -- Normal speed for the walk
+    end
+end
+
+-- Function to stop walk animation
+local function stopWalkAnimation()
+    if walkAnimationTrack.IsPlaying then
+        walkAnimationTrack:Stop(fadeTime)
+    end
+end
+
+-- Monitor movement events
+game:GetService("RunService").Heartbeat:Connect(function()
+    local isCurrentlyMoving = humanoid.MoveDirection.Magnitude > 0
+
+    if isCurrentlyMoving and not isMoving then
+        -- Character started moving
+        playWalkAnimation()
+        isMoving = true
+    elseif not isCurrentlyMoving and isMoving then
+        -- Character stopped moving
+        stopWalkAnimation()
+        isMoving = false
+    end
+end)
+--------
+
+
+--⫷𓆩[ Walking Forward Animation Trigger ]𓆪⫸--
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+
+-- Fade settings
+local fadeTime = 0.3
+
+-- Walk Animation setup
+local walkAnimation = Instance.new("Animation")
+walkAnimation.AnimationId = "rbxassetid://100348530"  -- Replace with your walk animation ID
+local walkAnimationTrack = animator:LoadAnimation(walkAnimation)
+
+-- Track player movement state
+local isMoving = false
+
+-- Function to play or resume walk animation
+local function ensureWalkAnimationPlaying()
+	if not walkAnimationTrack.IsPlaying then
+		walkAnimationTrack:Play(fadeTime)
+		walkAnimationTrack.TimePosition = 0
+		walkAnimationTrack:AdjustSpeed(2)
+	end
+end
+
+-- Function to stop walk animation
+local function stopWalkAnimation()
+	if walkAnimationTrack.IsPlaying then
+		walkAnimationTrack:Stop(fadeTime)
+	end
+end
+
+-- Heartbeat loop to monitor state
+RunService.Heartbeat:Connect(function()
+	local currentlyMoving = humanoid.MoveDirection.Magnitude > 0
+
+	if currentlyMoving then
+		ensureWalkAnimationPlaying()
+	else
+		stopWalkAnimation()
+	end
+
+	isMoving = currentlyMoving
+end)
+
+-- Make sure animation loops when it ends unexpectedly (safety net)
+walkAnimationTrack.Stopped:Connect(function()
+	if isMoving then
+		-- Replay it if the player is still walking
+		walkAnimationTrack:Play(fadeTime)
+		walkAnimationTrack.TimePosition = 0
+		walkAnimationTrack:AdjustSpeed(2)
+	end
+end)
+------
+--⫷𓆩[ Walking Forward Animation Trigger3]𓆪⫸--
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+
+-- Fade settings
+local fadeTime = 0.3 -- Time to smoothly adjust animation speed
+
+-- Walk Animation setup
+local walkAnimation = Instance.new("Animation")
+walkAnimation.AnimationId = "rbxassetid://126741747"  -- Replace with your walk animation ID
+local walkAnimationTrack = animator:LoadAnimation(walkAnimation)
+
+-- State to track movement
+local isMoving = false
+
+-- Function to play walk animation
+local function playWalkAnimation()
+    if not walkAnimationTrack.IsPlaying then
+        walkAnimationTrack:Play(fadeTime)
+        walkAnimationTrack.TimePosition = 0 -- Start at the beginning
+        walkAnimationTrack:AdjustSpeed(1)  -- Normal speed for the walk
+    end
+end
+
+-- Function to stop walk animation
+local function stopWalkAnimation()
+    if walkAnimationTrack.IsPlaying then
+        walkAnimationTrack:Stop(fadeTime)
+    end
+end
+
+-- Monitor movement events
+game:GetService("RunService").Heartbeat:Connect(function()
+    local isCurrentlyMoving = humanoid.MoveDirection.Magnitude > 0
+
+    if isCurrentlyMoving and not isMoving then
+        -- Character started moving
+        playWalkAnimation()
+        isMoving = true
+    elseif not isCurrentlyMoving and isMoving then
+        -- Character stopped moving
+        stopWalkAnimation()
+        isMoving = false
+    end
+end)
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+
+--⫷𓆩[ Walk Animation Settings ]𓆪⫸--
+local fadeTime = 0.3
+local walkAnimation = Instance.new("Animation")
+walkAnimation.AnimationId = "rbxassetid://28440069"  -- Replace with your walk animation ID
+local walkAnimationTrack = animator:LoadAnimation(walkAnimation)
+walkAnimationTrack.Looped = false
+
+local isMoving = false
+
+--⫷𓆩[ Walk Animation Control ]𓆪⫸--
+local function playWalkAnimation()
+	if not walkAnimationTrack.IsPlaying then
+		walkAnimationTrack:Play(fadeTime)
+		walkAnimationTrack.TimePosition = 0
+		walkAnimationTrack:AdjustSpeed(0.8)
+	end
+end
+
+local function stopWalkAnimation()
+	if walkAnimationTrack.IsPlaying then
+		walkAnimationTrack:Stop(fadeTime)
+	end
+end
+
+--⫷𓆩[ Loop Re-check System ]𓆪⫸--
+RunService.Heartbeat:Connect(function()
+	local isCurrentlyMoving = humanoid.MoveDirection.Magnitude > 0
+
+	if isCurrentlyMoving then
+		if not isMoving then
+			playWalkAnimation()
+			isMoving = true
+		elseif not walkAnimationTrack.IsPlaying then
+			-- Restart if animation stops during walking
+			playWalkAnimation()
+		end
+	else
+		if isMoving then
+			stopWalkAnimation()
+			isMoving = false
+		end
+	end
+end)
+--⫷𓆩[ animation walk3 left right]𓆪⫸--
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local hrp = character:WaitForChild("HumanoidRootPart")
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://248335946"
+local animationTrack = humanoid:LoadAnimation(animation)
+local fadeTime = 0.2
+local isPlaying = false
+RunService.RenderStepped:Connect(function()
+	if not character or not hrp then return end
+	local moveDir = humanoid.MoveDirection
+	if moveDir.Magnitude > 0 then
+		local leftDot = -hrp.CFrame.RightVector:Dot(moveDir.Unit)
+		if leftDot >= 0.5 then -- walking left or back-left
+			if not isPlaying then
+				animationTrack:Play(fadeTime)
+				animationTrack.TimePosition = 0.8
+				animationTrack:AdjustSpeed(0)
+				isPlaying = true
+				delay(0.5, function()
+					if isPlaying then
+						animationTrack:Stop(fadeTime)
+						isPlaying = false
+					end
+				end)
+			end
+		else
+			if isPlaying then
+				animationTrack:Stop(fadeTime)
+				isPlaying = false
+			end
+		end
+	else
+		if isPlaying then
+			animationTrack:Stop(fadeTime)
+			isPlaying = false
+		end
+	end
+end)
+--
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local hrp = character:WaitForChild("HumanoidRootPart")
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://248335946"
+local animationTrack = humanoid:LoadAnimation(animation)
+local fadeTime = 0.2
+local isPlaying = false
+RunService.RenderStepped:Connect(function()
+	if not character or not hrp then return end
+	local moveDir = humanoid.MoveDirection
+	if moveDir.Magnitude > 0 then
+		local rightDot = hrp.CFrame.RightVector:Dot(moveDir.Unit)
+		if rightDot >= 0.5 then -- walking right or back-right
+			if not isPlaying then
+				animationTrack:Play(fadeTime)
+				animationTrack.TimePosition = 2
+				animationTrack:AdjustSpeed(0)
+				isPlaying = true
+				delay(0.5, function()
+					if isPlaying then
+						animationTrack:Stop(fadeTime)
+						isPlaying = false
+					end
+				end)
+			end
+		else
+			if isPlaying then
+				animationTrack:Stop(fadeTime)
+				isPlaying = false
+			end
+		end
+	else
+		if isPlaying then
+			animationTrack:Stop(fadeTime)
+			isPlaying = false
+		end
+	end
+end)
+
+
+
+
+--⫷𓆩[ animation walk]𓆪⫸--
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+
+-- Fade settings
+local fadeTime = 0.3 -- Time to smoothly adjust animation speed
+
+-- Walk Animation setup
+local walkAnimation = Instance.new("Animation")
+walkAnimation.AnimationId = "rbxassetid://0"  -- Replace with your walk animation ID
+local walkAnimationTrack = animator:LoadAnimation(walkAnimation)
+
+-- State to track movement
+local isMoving = false
+
+-- Function to play walk animation
+local function playWalkAnimation()
+    if not walkAnimationTrack.IsPlaying then
+        walkAnimationTrack:Play(fadeTime)
+        walkAnimationTrack.TimePosition = 0 -- Start at the beginning
+        walkAnimationTrack:AdjustSpeed(0.4)  -- Normal speed for the walk
+    end
+end
+
+-- Function to stop walk animation
+local function stopWalkAnimation()
+    if walkAnimationTrack.IsPlaying then
+        walkAnimationTrack:Stop(fadeTime)
+    end
+end
+
+-- Monitor movement events
+game:GetService("RunService").Heartbeat:Connect(function()
+    local isCurrentlyMoving = humanoid.MoveDirection.Magnitude > 0
+
+    if isCurrentlyMoving and not isMoving then
+        -- Character started moving
+        playWalkAnimation()
+        isMoving = true
+    elseif not isCurrentlyMoving and isMoving then
+        -- Character stopped moving
+        stopWalkAnimation()
+        isMoving = false
+    end
+end)
+
+
+
+
+--⫷𓆩[ Unified Walking Direction Animation Trigger — Fade Only on Play/Stop ]𓆪⫸--
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://136796440"
+local animationTrack = humanoid:LoadAnimation(animation)
+
+local fadeTime = 0.2
+local isPlaying = false
+local currentDirection = nil
+
+RunService.RenderStepped:Connect(function()
+	if not character or not hrp then return end
+
+	local moveDir = humanoid.MoveDirection
+	if moveDir.Magnitude > 0 then
+		local forwardDot = hrp.CFrame.LookVector:Dot(moveDir.Unit)
+		local backDot = -hrp.CFrame.LookVector:Dot(moveDir.Unit)
+		local rightDot = hrp.CFrame.RightVector:Dot(moveDir.Unit)
+		local leftDot = -hrp.CFrame.RightVector:Dot(moveDir.Unit)
+
+		local newDirection
+		local newTimePosition
+
+		if forwardDot >= 0.5 then
+			newDirection = "Forward"
+			newTimePosition = 3.5
+		elseif backDot >= 0.5 then
+			newDirection = "Backward"
+			newTimePosition = 4.99
+		elseif rightDot >= 0.5 then
+			newDirection = "Right"
+			newTimePosition = 6
+		elseif leftDot >= 0.5 then
+			newDirection = "Left"
+			newTimePosition = 8
+		end
+
+		if newDirection then
+			if not isPlaying then
+				animationTrack:Play(fadeTime)
+				animationTrack:AdjustSpeed(0)
+				isPlaying = true
+			end
+
+			if newDirection ~= currentDirection then
+				animationTrack.TimePosition = newTimePosition
+				currentDirection = newDirection
+			end
+		else
+			if isPlaying then
+				animationTrack:Stop(fadeTime)
+				isPlaying = false
+				currentDirection = nil
+			end
+		end
+	else
+		if isPlaying then
+			animationTrack:Stop(fadeTime)
+			isPlaying = false
+			currentDirection = nil
+		end
+	end
+end)
+--⫷⟡⫸ 𝑺𝒆𝒄𝒕𝒊𝒐𝒏: camera set up 4 ⫷⟡⫸--
+local player = game.Players.LocalPlayer
+local camera = workspace.CurrentCamera
+local function updateCameraOffset()
+    local character = player.Character
+    if character then
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        local head = character:FindFirstChild("Head")
+        local hrp = character:FindFirstChild("HumanoidRootPart")
+        if humanoid and head and hrp then
+            local offset = hrp.CFrame:PointToObjectSpace(head.Position)
+            humanoid.CameraOffset = Vector3.new(0, offset.Y - 1.5, offset.Z)
+        end
+    end
+end
+game:GetService("RunService").RenderStepped:Connect(updateCameraOffset)
+
+--⫷𓆩[ Look Right or Back-Right Animation Trigger 1]𓆪⫸--
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local hrp = character:WaitForChild("HumanoidRootPart")
+local camera = workspace.CurrentCamera
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://88016955"
+local animationTrack = humanoid:LoadAnimation(animation)
+local fadeTime = 0.5
+local isPlaying = false
+RunService.RenderStepped:Connect(function()
+	if not character or not hrp then return end
+	local charCFrame = hrp.CFrame
+	local camLook = camera.CFrame.LookVector
+	-- Get the dot product between camera and player's right direction
+	local rightDot = charCFrame.RightVector:Dot(camLook)
+	-- Play if looking to the right or back-right (rightDot >= 0.5)
+	if rightDot >= 0.5 then
+		if not isPlaying then
+			animationTrack:Play(fadeTime)
+			animationTrack.TimePosition = 0.5
+			animationTrack:AdjustSpeed(0)
+			isPlaying = true
+		end
+	else
+		if isPlaying then
+			animationTrack:Stop(fadeTime)
+			isPlaying = false
+		end
+	end
+end)
+
+--⫷⟡⫸ 𝑺𝒆𝒄𝒕𝒊𝒐𝒏: spawn animation start 2⫷⟡⫸--
+-- start up to end
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://243761991"
+local animationTrack = humanoid:LoadAnimation(animation)
+local fadeTime = 0.5
+animationTrack:Play(fadeTime)
+animationTrack.TimePosition = 0.5
+animationTrack:AdjustSpeed(0)
+task.delay(1.4, function()
+    animationTrack:Stop(fadeTime)
+end)
+-- teleport animation
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://94099358"
+local animationTrack = humanoid:LoadAnimation(animation)
+local fadeTime = 0.2
+animationTrack:Play(fadeTime)
+animationTrack.TimePosition = 0.2
+animationTrack:AdjustSpeed(0)
+task.delay(0.5, function()
+    animationTrack:Stop(fadeTime)
+end)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://97170520"
+local animationTrack = humanoid:LoadAnimation(animation)
+local fadeTime = 0.2
+animationTrack:Play(fadeTime)
+animationTrack.TimePosition = 0.5
+animationTrack:AdjustSpeed(0)
+task.delay(0.5, function()
+    animationTrack:Stop(fadeTime)
+end)
+-- teleport
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local rootPart = character:WaitForChild("HumanoidRootPart")
+rootPart.CFrame = rootPart.CFrame + Vector3.new(0, 50, 0)
+task.wait(0.4)
+rootPart.CFrame = rootPart.CFrame - Vector3.new(0, 33, 0)
+-- animation and position 
+wait(0.1)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://183294396"
+local animationTrack = humanoid:LoadAnimation(animation)
+local fadeTime = 0.5
+animationTrack:Play(fadeTime)
+animationTrack.TimePosition = 0
+animationTrack:AdjustSpeed(1)
+task.delay(1.3, function()
+    animationTrack:Stop(fadeTime)
+end)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://180416148"
+local animationTrack = humanoid:LoadAnimation(animation)
+local fadeTime = 0.4
+animationTrack:Play(fadeTime)
+animationTrack.TimePosition = 1.3
+animationTrack:AdjustSpeed(0)
+task.delay(1.3, function()
+    animationTrack:Stop(fadeTime)
+end)
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://313776454"
+
+local animationTrack = humanoid:LoadAnimation(animation)
+
+local fadeTime = 0.5
+animationTrack:Play(fadeTime)
+animationTrack.TimePosition = 0.3
+animationTrack:AdjustSpeed(0)
+
+task.delay(1.3, function()
+    animationTrack:Stop(fadeTime)
+end)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://204295235"
+
+local animationTrack = humanoid:LoadAnimation(animation)
+
+local fadeTime = 0.5
+animationTrack:Play(fadeTime)
+animationTrack.TimePosition = 1.5
+animationTrack:AdjustSpeed(0)
+
+task.delay(1.13, function()
+    animationTrack:Stop(fadeTime)
+end)
+local c = game.Players.LocalPlayer.Character
+local hum = c.Humanoid
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://180436334"
+local track = hum:LoadAnimation(animation)
+track:Play(1, 5, 1)
+track:AdjustSpeed(0.01)
+-- position
+local hrp = c.HumanoidRootPart
+local cfr = hrp.CFrame
+local start = tick()
+while tick() - start < 1.3 do
+    task.wait()
+    hrp.CFrame = cfr * CFrame.Angles(math.rad(-30), 0, 0) * CFrame.new(0, 0, -2.5)
+    hrp.Velocity = Vector3.zero
+    hrp.RotVelocity = Vector3.zero
+end
+track:Stop()
+--⫷⟡⫸ 𝑺𝒆𝒄𝒕𝒊𝒐𝒏: Spawn animation 2 ⫷⟡⫸--
+------------
+Wait(0.1)
+------------
+--⫷⟡⫸ 𝑺𝒆𝒄𝒕𝒊𝒐𝒏: Idle jump animation 3 ⫷⟡⫸--
+
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+-- Fade settings
+local fadeTime = 0.6 -- Time to smoothly adjust animation speed
+-- Jump Animation setup
+local jumpAnimation = Instance.new("Animation")
+jumpAnimation.AnimationId = "rbxassetid://97170520"
+local jumpAnimationTrack = animator:LoadAnimation(jumpAnimation)
+-- Function to play jump animation
+local function playJumpAnimation()
+    if not jumpAnimationTrack.IsPlaying then
+        jumpAnimationTrack:Play(fadeTime)
+        jumpAnimationTrack.TimePosition = 0 -- Start from the beginning
+        jumpAnimationTrack:AdjustSpeed(0.9) -- Normal speed for the jump
+    end
+end
+-- Function to stop jump animation
+local function stopJumpAnimation()
+    if jumpAnimationTrack.IsPlaying then
+        jumpAnimationTrack:Stop(fadeTime)
+    end
+end
+-- Monitor jump events
+humanoid.StateChanged:Connect(function(_, newState)
+    if newState == Enum.HumanoidStateType.Jumping then
+        -- Play jump animation when jumping
+        playJumpAnimation()
+    elseif newState == Enum.HumanoidStateType.Landed then
+        -- Stop jump animation when landing
+        stopJumpAnimation()
+    end
+end)
+--⫷⟡⫸ 𝑺𝒆𝒄𝒕𝒊𝒐𝒏: Idle animation 4 ⫷⟡⫸--
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+-- fade
+local fadeTime = 0.3
+local idleAnimation = Instance.new("Animation")
+idleAnimation.AnimationId = "rbxassetid://21633130"
+local idleAnimationTrack = animator:LoadAnimation(idleAnimation)
+idleAnimationTrack.Looped = true -- Ensure the animation loops
+local isIdlePlaying = false
+local function playIdleAnimation()
+    if not isIdlePlaying then
+        idleAnimationTrack:Play(fadeTime)
+        idleAnimationTrack.TimePosition = 1 -- Start at 1 second
+        idleAnimationTrack:AdjustSpeed(0) -- Slow animation speed
+        isIdlePlaying = true
+    end
+end
+local function stopIdleAnimation()
+    if isIdlePlaying then
+        idleAnimationTrack:Stop(fadeTime)
+        isIdlePlaying = false
+    end
+end
+game:GetService("RunService").Heartbeat:Connect(function()
+    if humanoid.MoveDirection.Magnitude == 0 then
+        -- Play idle animation if standing still
+        playIdleAnimation()
+    else
+        stopIdleAnimation()
+    end
+end)
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+-- fade
+local fadeTime = 0.3
+local idleAnimation = Instance.new("Animation")
+idleAnimation.AnimationId = "rbxassetid://94853940"
+local idleAnimationTrack = animator:LoadAnimation(idleAnimation)
+idleAnimationTrack.Looped = true -- Ensure the animation loops
+local isIdlePlaying = false
+local function playIdleAnimation()
+    if not isIdlePlaying then
+        idleAnimationTrack:Play(fadeTime)
+        idleAnimationTrack.TimePosition = 1 -- Start at 1 second
+        idleAnimationTrack:AdjustSpeed(0) -- Slow animation speed
+        isIdlePlaying = true
+    end
+end
+local function stopIdleAnimation()
+    if isIdlePlaying then
+        idleAnimationTrack:Stop(fadeTime)
+        isIdlePlaying = false
+    end
+end
+game:GetService("RunService").Heartbeat:Connect(function()
+    if humanoid.MoveDirection.Magnitude == 0 then
+        -- Play idle animation if standing still
+        playIdleAnimation()
+    else
+        stopIdleAnimation()
+    end
+end)
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+-- fade
+local fadeTime = 0.3
+local idleAnimation = Instance.new("Animation")
+idleAnimation.AnimationId = "rbxassetid://31319431"
+local idleAnimationTrack = animator:LoadAnimation(idleAnimation)
+idleAnimationTrack.Looped = true -- Ensure the animation loops
+local isIdlePlaying = false
+local function playIdleAnimation()
+    if not isIdlePlaying then
+        idleAnimationTrack:Play(fadeTime)
+        idleAnimationTrack.TimePosition = 1 -- Start at 1 second
+        idleAnimationTrack:AdjustSpeed(0) -- Slow animation speed
+        isIdlePlaying = true
+    end
+end
+local function stopIdleAnimation()
+    if isIdlePlaying then
+        idleAnimationTrack:Stop(fadeTime)
+        isIdlePlaying = false
+    end
+end
+game:GetService("RunService").Heartbeat:Connect(function()
+    if humanoid.MoveDirection.Magnitude == 0 then
+        -- Play idle animation if standing still
+        playIdleAnimation()
+    else
+        stopIdleAnimation()
+    end
+end)
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:WaitForChild("Animator")
+local fadeTime = 0.5
+local idleAnimation = Instance.new("Animation")
+idleAnimation.AnimationId = "rbxassetid://129423030"
+local idleAnimationTrack = animator:LoadAnimation(idleAnimation)
+idleAnimationTrack.Looped = false -- We handle looping manually
+idleAnimationTrack.Priority = Enum.AnimationPriority.Idle
+local isIdle = false
+local cooldown = false
+local function playIdleCycle()
+	if cooldown then return end
+	cooldown = true
+	idleAnimationTrack:Play(fadeTime)
+	idleAnimationTrack.TimePosition = 0
+	idleAnimationTrack:AdjustSpeed(0.41)
+	task.delay(0.9, function()
+		idleAnimationTrack:Stop(fadeTime)
+		cooldown = false
+	end)
+end
+RunService.Heartbeat:Connect(function()
+	if humanoid.MoveDirection.Magnitude == 0 then
+		isIdle = true
+	else
+		isIdle = false
+		if idleAnimationTrack.IsPlaying then
+			idleAnimationTrack:Stop(fadeTime)
+		end
+	end
+end)
+while true do
+	task.wait(1.59) -- Slightly more than 0.5 to avoid overlap
+	if isIdle then
+		playIdleCycle()
+	end
+end
+--⫷⟡⫸ 𝑺𝒆𝒄𝒕𝒊𝒐𝒏: camera set up 4 ⫷⟡⫸--
+local player = game.Players.LocalPlayer
+local camera = workspace.CurrentCamera
+local function updateCameraOffset()
+    local character = player.Character
+    if character then
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        local head = character:FindFirstChild("Head")
+        local hrp = character:FindFirstChild("HumanoidRootPart")
+        if humanoid and head and hrp then
+            local offset = hrp.CFrame:PointToObjectSpace(head.Position)
+            humanoid.CameraOffset = Vector3.new(0, offset.Y - 1.5, offset.Z)
+        end
+    end
+end
+game:GetService("RunService").RenderStepped:Connect(updateCameraOffset)
